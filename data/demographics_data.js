@@ -1,4 +1,5 @@
-var demographics_data01 = [['State','Total number of women aged 15-44, 2011','Population estimates among all women aged 13-44, 2010','Population estimates among all women aged 13-44, 2012',''],
+var demographics_data01 = [
+['State','Total number of women aged 15-44, 2011','Population estimates among all women aged 13-44, 2010','Population estimates among all women aged 13-44, 2012',''],
 ['Alabama',959278,1022450,1021290,],
 ['Alaska',146228,153090,157050,],
 ['Arizona',1269297,1349610,1368980,],

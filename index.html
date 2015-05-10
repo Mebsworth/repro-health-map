@@ -12,9 +12,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <script type="text/javascript" src="data.js"></script>
-        <script type="text/javascript" src="clinic_data.js"></script>
-        <script type="text/javascript" src="demographics_data.js"></script>
+        <script type="text/javascript" src="data/data.js"></script>
+        <script type="text/javascript" src="data/clinic_data.js"></script>
+        <script type="text/javascript" src="data/demographics_data.js"></script>
         <script type="text/javascript" src="script.js"></script>
     </head>
     <body>
@@ -25,25 +25,25 @@
                 <div class="col-md-3">
                     <div class="btn-group-vertical" data-toggle="buttons" style="padding-top:100px;">
                         <label class="btn btn-default btn-sm">
-                            <input type="radio" id="q156" name="quality[25]" value="1" /> <p># of Clinics per 100,000 Women* in 2008</p>
+                            <input class='map_option_radio' type="radio" id="q156" name="quality[25]" value="1" /> <p># of Clinics per 100,000 Women* in 2008</p>
                         </label> 
                         <label class="btn btn-default btn-sm">
-                            <input type="radio" id="q157" name="quality[25]" value="2" /> <p>Change in # of Clinics: 2008-2011</p>
+                            <input class='map_option_radio' type="radio" id="q157" name="quality[25]" value="2" /> <p>Change in # of Clinics: 2008-2011</p>
                         </label> 
                         <label class="btn btn-default btn-sm ">
-                            <input type="radio" id="q158" name="quality[25]" value="3" /> <p> % Change in # of Clinics: 2008-2011 </p>
+                            <input class='map_option_radio' type="radio" id="q158" name="quality[25]" value="3" /> <p> % Change in # of Clinics: 2008-2011 </p>
                         </label> 
                         <label class="btn btn-default btn-sm">
-                            <input type="radio" id="q159" name="quality[25]" value="4" /> <p># of Clinics per 100,000 Women* in 2011</p>
+                            <input class='map_option_radio' type="radio" id="q159" name="quality[25]" value="4" /> <p># of Clinics per 100,000 Women* in 2011</p>
                         </label> 
                         <label class="btn btn-default btn-sm">
-                            <input type="radio" id="q160" name="quality[25]" value="5" /> <p>% of Counties With No Clinics </p>
+                            <input class='map_option_radio' type="radio" id="q160" name="quality[25]" value="5" /> <p>% of Counties With A Clinic </p>
                         </label>
                         <label class="btn btn-default btn-sm">
-                            <input type="radio" id="q160" name="quality[25]" value="6" /> <p class="small">% Population* Living in County With No Clinic </p>
+                            <input class='map_option_radio' type="radio" id="q160" name="quality[25]" value="6" /> <p class="small">% Population* Living in County With No Clinic </p>
                         </label>
                         <label class="btn btn-default btn-sm active">
-                            <input type="radio" id="q160" name="quality[25]" checked="checked" value="7" /> <p>Overall Standing</p>
+                            <input class='map_option_radio' type="radio" id="q160" name="quality[25]" checked="checked" value="7" /> <p>Overall Standing</p>
                         </label>
                     </div> <!-- btn-group -->
                     <h3> *Women defined as all women ages 13-44</h3>

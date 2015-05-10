@@ -1,16 +1,22 @@
 // google.load("visualization", "1", {packages:["geochart"]});
 // google.setOnLoadCallback(drawRegionsMap);
 
-
+    //console.log('blah');
 
     var checked_button = 7;
 
-    $('btn').click(function() {
-        if ($(this).is(':checked')) { alert('checked'); }
+    $(document).on('change', 'input:radio', function (event) {
+        //console.log($(this).val());
+        checked_button = parseInt($(this).val());
+        
+        drawClinicMap();
+
     });
+
 
     google.load("visualization", "1", {packages:["geochart"]});
     google.setOnLoadCallback(drawClinicMap);
+ 
 
 
 function drawRegionsMap() {
@@ -29,7 +35,6 @@ function drawRegionsMap() {
 }
 
 
-
 function drawClinicMap() {
     /* OPTIONS
     1 : 2008 num clinics
@@ -46,33 +51,34 @@ function drawClinicMap() {
     var options = {
         region: 'US',
         resolution: 'provinces',
-        colorAxis: {minValue: 0, colors: ['#6495ED', '#FFA500']}
+        colorAxis: {colors: ['#6495ED', '#FFA500']}
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('map_container'));
 
 
-    dataTable = getClinicData(1, dataTable);
+    dataTable = getClinicData(checked_button, dataTable);
 
     chart.draw(dataTable, options);
 }
 
-var labels = ['# of Clinics per 100,000 Women* in 2008', 'Change in # of Clinics 2008-2011', '% Change in Clinics 2008-2011', '# of Clinics per 100,000 Women* in 2011','% of Counties With No Clinics', '% Women* Living in a County With No Clinic', 'Overall Score'];
+var labels = ['# of Clinics per 100,000 Women* in 2008', 'Change in # of Clinics 2008-2011', '% Change in Clinics 2008-2011', '# of Clinics per 100,000 Women* in 2011','% of Counties With a Clinic', '% Women* Living in a County With No Clinic', 'Overall Score'];
 
 function getClinicData(option, dataTable) {
+    console.log('getClinicData() ' + option)
 
-    if (option == 8) {
+   if (option == 7) {
         dataTable.addColumn('number', labels[option-1]);
         var data = [];
         for (var i = 1; i < 52; i++) {
             var row = clinic_data01[i];
-            var score = row[1] + row[2] + row[3] + row[4] - row[5] - row[6];
-            data[data.length] = [clinic_data01[i][0], score];
+            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6] + 100;
+            console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
+            console.log(row[0] + ", " + score);
+            data[data.length] = [row[0], score];
         }
         dataTable.addRows(data);
         document.getElementById("map_title").innerHTML += ': ' + labels[option-1];
-
-    } else if (option == 7) {
 
     } else {
         dataTable.addColumn('number', labels[option-1]);
@@ -81,10 +87,13 @@ function getClinicData(option, dataTable) {
             var value;
             if (option == 1 || option == 4) {
                 value = clinic_data01[i][option] / (demographics_data01[i][1] / 100000.0);
+            } else if (option == 5) {
+                value = 100 - clinic_data01[i][option];
             } else {
                 value = clinic_data01[i][option];
             }
             data[data.length] = [clinic_data01[i][0], value]
+            console.log(clinic_data01[i][0] + ', ' + demographics_data01[i][0]);
         }
         dataTable.addRows(data);
         document.getElementById("map_title").innerHTML += ': ' + labels[option-1];
