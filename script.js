@@ -62,7 +62,7 @@ function drawClinicMap() {
     chart.draw(dataTable, options);
 }
 
-var labels = ['# of Clinics per 100,000 Women* in 2008', 'Change in # of Clinics 2008-2011', '% Change in Clinics 2008-2011', '# of Clinics per 100,000 Women* in 2011','% of Counties With a Clinic', '% Women* Living in a County With No Clinic', 'Overall Score'];
+var labels = ['# of Clinics per 100,000 Women* in 2008', 'Change in # of Clinics 2008-2011', '% Change in Clinics 2008-2011', '# of Clinics per 100,000 Women* in 2011','% of Counties With a Clinic', '% Women* Living in a County With A Clinic', 'Overall Score'];
 
 function getClinicData(option, dataTable) {
     console.log('getClinicData() ' + option)
@@ -87,7 +87,7 @@ function getClinicData(option, dataTable) {
             var value;
             if (option == 1 || option == 4) {
                 value = clinic_data01[i][option] / (demographics_data01[i][1] / 100000.0);
-            } else if (option == 5) {
+            } else if (option == 5 || option == 6) {
                 value = 100 - clinic_data01[i][option];
             } else {
                 value = clinic_data01[i][option];
