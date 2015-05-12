@@ -4,6 +4,7 @@
     //console.log('blah');
 
     var checked_button = 7;
+    var allScores = [];
 
     $(document).on('change', 'input:radio', function (event) {
         //console.log($(this).val());
@@ -13,6 +14,7 @@
 
     });
 
+    orderStates();
 
     google.load("visualization", "1", {packages:["geochart"]});
     google.setOnLoadCallback(drawProviderMap);
@@ -32,6 +34,27 @@ function drawRegionsMap() {
     var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
     chart.draw(data, options);
+}
+
+function orderStates() {
+    for (var i = 1; i < 52; i++) {
+        var row = provider_data01[i];
+        var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6];
+        console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
+        console.log(row[0] + ", " + score);
+        allScores[allScores.length] = score;
+        
+    }
+    allScores.sort(function(a, b){return a-b});
+    console.log(allScores);
+}
+
+function getPercentile(score) {
+    var idx = allScores.indexOf(score);
+
+    var percentile = idx/50.0 * 100;
+    console.log('Score: ' + score + ', idx: ' + idx + ', percentile: ' + percentile);
+    return Math.round(percentile);
 }
 
 
@@ -75,10 +98,11 @@ function getProviderData(option, dataTable) {
         var data = [];
         for (var i = 1; i < 52; i++) {
             var row = provider_data01[i];
-            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6] + 100;
-            console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
-            console.log(row[0] + ", " + score);
-            data[data.length] = [row[0], score];
+            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6] ;
+            // console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
+            // console.log(row[0] + ", " + score);
+            var p = getPercentile(score);
+            data[data.length] = [row[0], p];
         }
         dataTable.addRows(data);
         document.getElementById("map_subtitle").innerHTML = labels[option-1];

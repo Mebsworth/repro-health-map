@@ -4,6 +4,7 @@
     //console.log('blah');
 
     var checked_button = 7;
+    var allScores = []; // holds the scores of all states, for percentile calculations
 
     $(document).on('change', 'input:radio', function (event) {
         //console.log($(this).val());
@@ -61,6 +62,7 @@ function drawClinicMap() {
 
     var chart = new google.visualization.GeoChart(document.getElementById('map_container'));
 
+    orderStates();
 
     dataTable = getClinicData(checked_button, dataTable);
 
@@ -76,18 +78,42 @@ var labels = [
     '% Women* Living in a County With A Clinic', 
     'Overall Standing'];
 
+function orderStates() {
+    for (var i = 1; i < 52; i++) {
+        var row = clinic_data01[i];
+        var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6];
+        console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
+        console.log(row[0] + ", " + score);
+        allScores[allScores.length] = score;
+        
+    }
+    allScores.sort(function(a, b){return a-b});
+    console.log(allScores);
+}
+
+function getPercentile(score) {
+    var idx = allScores.indexOf(score);
+
+    var percentile = idx/50.0 * 100;
+    console.log('Score: ' + score + ', idx: ' + idx + ', percentile: ' + percentile);
+    return Math.round(percentile);
+
+}
+
+
 function getClinicData(option, dataTable) {
-    console.log('getClinicData() ' + option)
+    //console.log('getClinicData() ' + option)
 
    if (option == 7) {
         dataTable.addColumn('number', labels[option-1]);
         var data = [];
         for (var i = 1; i < 52; i++) {
             var row = clinic_data01[i];
-            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6] + 100;
-            console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
-            console.log(row[0] + ", " + score);
-            data[data.length] = [row[0], score];
+            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6];
+            //console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
+            //console.log(row[0] + ", " + score);
+            var p = getPercentile(score);
+            data[data.length] = [row[0], p];
         }
         dataTable.addRows(data);
         document.getElementById("map_subtitle").innerHTML = labels[option-1];
@@ -105,7 +131,7 @@ function getClinicData(option, dataTable) {
                 value = clinic_data01[i][option];
             }
             data[data.length] = [clinic_data01[i][0], value]
-            console.log(clinic_data01[i][0] + ', ' + demographics_data01[i][0]);
+            //console.log(clinic_data01[i][0] + ', ' + demographics_data01[i][0]);
         }
         dataTable.addRows(data);
         document.getElementById("map_subtitle").innerHTML = labels[option-1];

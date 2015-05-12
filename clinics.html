@@ -19,10 +19,27 @@
     </head>
     <body>
         <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+                            <li class="active"><a href="clinics.html">Clinics Map</a></li>
+                            <li><a href="providers.html">Providers Map</a></li>
+                            <li><a href="stats.html">Facts about Abortion</a></li>
+
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
             <h1 id="map_title" >Reproductive Health Map: Clinics</h1>
             <h1> <small id="map_subtitle">Overall Standing</small></h1>
             <div class="row">
-                <div class="col-md-9"><div id="map_container" style="width: 100%;"></div></div> 
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-md-9"><div id="map_container" style="width: 100%; padding-bottom:50px;"></div></div> 
+                    
                 <div class="col-md-3">
                     <div class="btn-group-vertical" data-toggle="buttons" style="padding-top:100px;">
                         <label class="btn btn-default btn-sm">
@@ -48,6 +65,7 @@
                         </label>
                     </div> <!-- btn-group -->
                     <h3> *ages 13-44</h3>
+
                     <!-- <div class="btn-group-vertical" data-toggle="buttons">
                         <label >
                             <input type="radio" id="q128" name="quality[21]" value="1" /> 1
@@ -66,7 +84,25 @@
                         </label>
                     </div> -->
                 </div> <!-- col-md-3 -->
+                </div>
+                </div>
             </div> <!-- row -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>How was the overall standing for a state calculated?</h4>
+                    <p>For each state, all values displayed in the map were added together to give an overall 'score'. The scores were sorted from least to greatest. From this sorted list, an overall standing was calculated by finding the percentile of a state compared to the rest. </p>
+                    <br>
+                    <br>
+                    <h4>What is the difference between an abortion provider and an abortion clinic?</h4>
+                    <p>A provider is a hospital, clinic or physician's office where abortions are performed. A clinic is a non-hospital facility that reported 400 or more abortions a year, including abortion clinics and non-specialized clinics. </p>
+                    <br>
+                    <br>
+                     <h3>Data Source: <a href="http://www.guttmacher.org/datacenter/index.jsp">The Guttmacher Institute: Data Center</a></h3>
+                </div>
+            </div>
+                    
+
+             
         </div style="width:100%;"> <!-- container-fluid -->
     </body>
 </html>
