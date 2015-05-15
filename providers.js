@@ -20,26 +20,10 @@
     google.setOnLoadCallback(drawProviderMap);
  
 
-
-function drawRegionsMap() {
-    var data = google.visualization.arrayToDataTable(data01);
-
-    var options = {
-        region: 'US',
-        resolution: 'provinces',
-
-        colorAxis: {minValue: 0, maxValue:1, colors: ['#6495ED', '#FFA500']}
-    };
-
-    var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
-
-    chart.draw(data, options);
-}
-
 function orderStates() {
     for (var i = 1; i < 52; i++) {
         var row = provider_data01[i];
-        var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6];
+        var score = ((row[1] + row[2]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[4] - row[5] - row[6];
         console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
         console.log(row[0] + ", " + score);
         allScores[allScores.length] = score;
@@ -69,13 +53,13 @@ function drawProviderMap() {
         //colorAxis: {colors: ['#8B4500', '#FFA500']}
         //colorAxis: {colors: ['#800000', '#FF4040']}
         //colorAxis: {colors: ['#800000', '#F08080']}
-        colorAxis: {colors: ['#800000', '#FFC1C1']}
-
+        //colorAxis: {colors: ['#800000', '#FFC1C1']}
+        //colorAxis: {colors: ['#00BFFF', '#FF8000']}
+        colorAxis: {colors: ['#27408B', '#FF8000']}
         
     };
 
     var chart = new google.visualization.GeoChart(document.getElementById('map_container'));
-
 
     dataTable = getProviderData(checked_button, dataTable);
 
@@ -98,7 +82,7 @@ function getProviderData(option, dataTable) {
         var data = [];
         for (var i = 1; i < 52; i++) {
             var row = provider_data01[i];
-            var score = ((row[1] + row[4]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[3] - row[5] - row[6] ;
+            var score = ((row[1] + row[2]) / (demographics_data01[i][1] / 100000.0)) * 10 + row[4] - row[5] - row[6] ;
             // console.log(row[1] + ', ' + row[2] + ', '+ row[3] + ', '+ row[4] + ', '+ row[5] + ', '+ row[6] + ', '+ demographics_data01[i][0] + ', ' + demographics_data01[i][1]);
             // console.log(row[0] + ", " + score);
             var p = getPercentile(score);
@@ -119,7 +103,7 @@ function getProviderData(option, dataTable) {
             } else {
                 value = provider_data01[i][option];
             }
-            data[data.length] = [provider_data01[i][0], value]
+            data[data.length] = [provider_data01[i][0], Math.round(value * 100) / 100];
             console.log(provider_data01[i][0] + ', ' + demographics_data01[i][0]);
         }
         dataTable.addRows(data);
